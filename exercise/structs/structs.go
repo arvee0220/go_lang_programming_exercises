@@ -28,15 +28,25 @@ func Area(rect Rectangle) float64 {
 	return rect.Length * rect.Width
 }
 
+func Perimeter(rect Rectangle) float64 {
+	return (rect.Length + rect.Width)
+}
+
 func main() {
 
 	rect1 := Rectangle{Length: 5, Width: 3}
 	area1 := Area(rect1)
+	perimeter1 := Perimeter(rect1)
 	fmt.Printf("Area of rectangle 1: %.2f\n", area1)
+	fmt.Printf("Perimeter of rectangle 1: %.2f\n", perimeter1)
+
 
 	rect1.Length *= 2
 	rect1.Width *= 2
 	area1 = Area(rect1)
+	perimeter1 = Perimeter(rect1)
 	fmt.Printf("New area of rectangle 1 after doubling size: %.2f\n", area1)
+	fmt.Printf("New perimeter of rectangle 1 after doubling size: %.2f\n", perimeter1)
+
 
 }
