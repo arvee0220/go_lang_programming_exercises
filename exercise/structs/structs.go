@@ -19,6 +19,24 @@ package main
 
 import "fmt"
 
+type Rectangle struct {
+	Length float64
+	Width  float64
+}
+
+func Area(rect Rectangle) float64 {
+	return rect.Length * rect.Width
+}
+
 func main() {
+
+	rect1 := Rectangle{Length: 5, Width: 3}
+	area1 := Area(rect1)
+	fmt.Printf("Area of rectangle 1: %.2f\n", area1)
+
+	rect1.Length *= 2
+	rect1.Width *= 2
+	area1 = Area(rect1)
+	fmt.Printf("New area of rectangle 1 after doubling size: %.2f\n", area1)
 
 }
