@@ -29,6 +29,14 @@ var shoppingList = [4]Product{
 	{ name: "Milk", price: 1.80 },
 }
 
+func reduce(list []Product, init float64, fn func(float64, float64) float64) float64 {
+	acc := init
+	for _, item := range list {
+		acc = fn(acc, item.price)
+	}
+	return acc
+}
+
 func printShoppingList(list [4]Product) {
 
 	if list[len(list) - 1].name == "" && list[len(list) - 1].price == 0 {
@@ -39,11 +47,9 @@ func printShoppingList(list [4]Product) {
 	
 	fmt.Println("Total number of items:", len(list))
 
-	totalCost := 0.0
-
-	for _, item := range list {
-		totalCost += item.price
-	}
+	totalCost := reduce(list[:], 0, func(a, b float64) float64 {
+		return a + b
+	})
 
 	fmt.Println("Total cost of items:", totalCost)
 }
