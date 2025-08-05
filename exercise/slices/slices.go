@@ -18,5 +18,29 @@ import "fmt"
 
 type Part string
 
+func printAssemblyLine(title string, line []Part) {
+	fmt.Println()
+	fmt.Println("---", title, "---")
+	for i := range line {
+		part := line[i]
+		fmt.Println(part)
+	}
+
+}
+
+
 func main() {
+	// Using a slice, create an assembly line that contains type Part
+	assemblyLine := []Part{"Engine", "Transmission", "Chassis"}
+
+	printAssemblyLine("Initial Assembly Line", assemblyLine)
+
+	assemblyLine = append(assemblyLine, "Wheels", "Brakes")
+
+	printAssemblyLine("Assembly Line after adding new parts", assemblyLine)
+
+	slice := assemblyLine[3:5]
+
+	printAssemblyLine("Final Assembly Line with new parts", slice)
+	
 }
