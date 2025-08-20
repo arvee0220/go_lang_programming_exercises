@@ -16,6 +16,32 @@ package main
 
 import "fmt"
 
+type calculator byte
+
+const (
+	add calculator = iota
+	sub
+	mul
+	div
+)
+
+func (c calculator) calculate(a, b int) (int, error){
+	switch c {
+	case add:
+		return a + b, nil
+	case sub:
+		return a - b, nil
+	case mul:
+		return a * b, nil
+	case div:
+		if b == 0 {
+			return 0, fmt.Errorf("error: cannot divide by zero")
+		}
+		return a / b, nil
+	}
+	return 0, fmt.Errorf("error: unknown operation")
+}
+
 func main() {
 	fmt.Println(add.calculate(2, 2)) // = 4
 
