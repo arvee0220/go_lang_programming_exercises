@@ -16,16 +16,16 @@ package main
 
 import "fmt"
 
-type calculator byte
+type Operation byte
 
 const (
-	add calculator = iota
+	add Operation = iota
 	sub
 	mul
 	div
 )
 
-func (c calculator) calculate(a, b int) (int, error){
+func (c Operation) calculate(a, b int) (int, error){
 	switch c {
 	case add:
 		return a + b, nil
@@ -35,11 +35,11 @@ func (c calculator) calculate(a, b int) (int, error){
 		return a * b, nil
 	case div:
 		if b == 0 {
-			return 0, fmt.Errorf("error: cannot divide by zero")
+			panic("error: cannot divide by zero")
 		}
 		return a / b, nil
 	}
-	return 0, fmt.Errorf("error: unknown operation")
+	panic("error: unknown operation")
 }
 
 func main() {
