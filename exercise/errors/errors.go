@@ -51,16 +51,26 @@ func ParseTime(timeStr string) (Time, error) {
 	if err != nil {
 		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing hour:%v", err), timeStr}
 	}
+	if hour < 0 || hour > 23 {
+		return Time{}, &TimeParseError{"Hour must be between 0 and 23", timeStr}
+	}
 
 	minute, err := strconv.Atoi(parts[1])
 	if err != nil {
 		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing minute:%v", err), timeStr}
+	}
+	if minute < 0 || minute > 59 {
+		return Time{}, &TimeParseError{"Minute must be between 0 and 59", timeStr}
 	}
 
 	second, err := strconv.Atoi(parts[2])
 	if err != nil {
 		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing second:%v", err), timeStr}
 	}
+	if second < 0 || second > 59 {
+		return Time{}, &TimeParseError{"Second must be between 0 and 59", timeStr}
+	}
+
 
 	return Time{Hour: hour, Minute: minute, Second: second}, nil
 }
