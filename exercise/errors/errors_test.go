@@ -12,7 +12,7 @@ func TestParseTime(t *testing.T) {
 	} {
 		{"14:07:33", Time{Hour: 14, Minute: 7, Second: 33}, false},
 		{"12:00", Time{}, true},		
-		{"25:00:00", Time{Hour: 25, Minute: 0, Second: 0}, false},
+		{"25:00:00", Time{Hour: 25, Minute: 0, Second: 0}, true},
 	}
 
 	for _, tc := range test {
