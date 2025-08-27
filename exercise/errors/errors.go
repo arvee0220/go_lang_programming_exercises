@@ -16,10 +16,10 @@
 
 package timeparse
 
-import (	
+import (
+	"fmt"	
 	"strings"
-	"strconv"
-	"errors"
+	"strconv"	
 )
 
 type Time struct {
@@ -28,26 +28,38 @@ type Time struct {
 	Second int
 }
 
+type TimeParseError struct {
+	msg string
+	input string
+}
+
+func (t *TimeParseError) Error() string {
+	return fmt.Sprintf("%v: %v", t.msg, t.input)
+}
+
 func ParseTime(timeStr string) (Time, error) {
 	parts := strings.Split(timeStr, ":")
 
 	if len(parts) != 3 {
-		return Time{}, errors.New("time string must be in HH:MM:SS format")
+		return Time{}, &TimeParseError{
+			msg: "time string must be in HH:MM:SS format",
+			input: timeStr,
+		}
 	}
 
 	hour, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return Time{}, errors.New("invalid hour component")
+		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing hour:%v", err), timeStr}
 	}
 
 	minute, err := strconv.Atoi(parts[1])
 	if err != nil {
-		return Time{}, errors.New("invalid minute component")
+		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing minute:%v", err), timeStr}
 	}
 
 	second, err := strconv.Atoi(parts[2])
 	if err != nil {
-		return Time{}, errors.New("invalid second component")
+		return Time{}, &TimeParseError{fmt.Sprintf("Error parsing second:%v", err), timeStr}
 	}
 
 	return Time{Hour: hour, Minute: minute, Second: second}, nil
