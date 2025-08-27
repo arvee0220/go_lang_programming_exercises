@@ -15,3 +15,41 @@
 //* Use the `errors` package to generate errors
 
 package timeparse
+
+import (	
+	"strings"
+	"strconv"
+	"errors"
+)
+
+type Time struct {
+	Hour int
+	Minute int
+	Second int
+}
+
+func ParseTime(timeStr string) (Time, error) {
+	parts := strings.Split(timeStr, ":")
+
+	if len(parts) != 3 {
+		return Time{}, errors.New("time string must be in HH:MM:SS format")
+	}
+
+	hour, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return Time{}, errors.New("invalid hour component")
+	}
+
+	minute, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return Time{}, errors.New("invalid minute component")
+	}
+
+	second, err := strconv.Atoi(parts[2])
+	if err != nil {
+		return Time{}, errors.New("invalid second component")
+	}
+
+	return Time{Hour: hour, Minute: minute, Second: second}, nil
+}
+
