@@ -42,6 +42,7 @@ func main() {
 		input = strings.ToLower(input)
 
 		if input == "" {
+			lineCount++
 			continue
 		}
 		lineCount++
