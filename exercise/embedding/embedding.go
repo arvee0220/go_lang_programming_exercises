@@ -65,7 +65,7 @@ type SystemDashboard struct {
 } */
 
 
-func (bw *BandwidthUsage) Average() Bytes {
+func (bw *BandwidthUsage) AverageBandwidth() Bytes {
 	var bUResult Bytes
 
 	for _, v := range bw.amount {
@@ -77,7 +77,7 @@ func (bw *BandwidthUsage) Average() Bytes {
 	return avg
 }
 
-func (tmp *CpuTemp) Average() Celcius {
+func (tmp *CpuTemp) AverageCpuTemp() Celcius {
 	var tempResult Celcius
 
 	for _, v := range tmp.temp {
@@ -89,7 +89,7 @@ func (tmp *CpuTemp) Average() Celcius {
 	return avg
 }
 
-func (mU *MemoryUsage) Average() Bytes {
+func (mU *MemoryUsage) AverageMemoryUsage() Bytes {
 	var mUResult Bytes
 
 	for _, v := range mU.amount {
@@ -106,7 +106,7 @@ func main() {
 	temp := CpuTemp{[]Celcius{50, 51, 53, 51, 52}}
 	memory := MemoryUsage{[]Bytes{800000, 800000, 810000, 820000, 800000}}
 
-	dashboard := SystemDashboard{bandwidth, temp, memory}
+	dashboard := SystemDashboard{ BandwidthUsage: bandwidth, CpuTemp: temp, MemoryUsage: memory}
 
-	fmt.Printf("Average Bandwidth: %v\nAverage CPU Temp: %v\nAverage Memory Usage: %v", dashboard.BandwidthUsage.Average(), dashboard.CpuTemp.Average(), dashboard.MemoryUsage.Average())
+	fmt.Printf("Average Bandwidth: %v\nAverage CPU Temp: %v\nAverage Memory Usage: %v", dashboard.AverageBandwidth(), dashboard.AverageCpuTemp(), dashboard.AverageMemoryUsage())
 }
