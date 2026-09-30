@@ -23,6 +23,15 @@ import (
 	"unicode"
 )
 
+type LineCallback func(line string)
+
+func processLine(line []string, callback LineCallback) {
+	for i, v := range line {
+		fmt.Printf("Line %d: %s\n", i, v)
+		callback(v)
+	}
+}
+
 func main() {
 	lines := []string{
 		"There are",
@@ -32,29 +41,30 @@ func main() {
 		"and 4 punctuation marks in these lines of text!",
 	}
 
-	func() {
+	anon := func(line string) {
+		slice := []rune(line)
 		letters := 0
 		digits := 0
 		spaces := 0
 		punctuation := 0
 
-		for _, v := range lines {
-			for _, r := range v {
-				if unicode.IsLetter(r) {
-					letters++
-				} else if unicode.IsDigit(r) {
-					digits++
-				} else if unicode.IsSpace(r) {
-					spaces++
-				} else if unicode.IsPunct(r) {
-					punctuation++
-				}
+		for i := 0; i < len(line); i++ {
+			if unicode.IsLetter(slice[i]) {
+				letters++
+			} else if unicode.IsDigit(slice[i]) {
+				digits++
+			} else if unicode.IsSpace(slice[i]) {
+				spaces++
+			} else if unicode.IsPunct(slice[i]) {
+				punctuation++
 			}
 		}
-
 		fmt.Printf("Number of letters: %d\n", letters)
 		fmt.Printf("Number of digits: %d\n", digits)
 		fmt.Printf("Number of spaces: %d\n", spaces)
 		fmt.Printf("Number of punctuation marks: %d\n", punctuation)
-	}()
+		fmt.Println()
+	}
+
+	processLine(lines, anon)
 }
